@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pixelinterpolation.controller.Controller">
+   <bottom>
+      <FlowPane alignment="CENTER" hgap="10.0" prefHeight="52.0" prefWidth="1300.0" style="-fx-background-color: lightgreen;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="labelSteps" text="Steps [1-1000]" />
+            <TextField fx:id="textFieldSteps" prefWidth="40" />
+            <Label fx:id="labelDelay" text="Delay (ms) [0-1000]" />
+            <TextField fx:id="textFieldDelay" prefWidth="40" />
+            <Button fx:id="buttonStart" mnemonicParsing="false" onAction="#onStartButtonClick" text="Start" />
+            <Button fx:id="buttonStop" onAction="#handleStopButton" mnemonicParsing="false" text="Stop" />
+         </children>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+      </FlowPane>
+   </bottom>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <left>
+            <ImageView fx:id="imageViewA" fitHeight="360.0" fitWidth="480.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="20.0" />
+               </BorderPane.margin>
+               <image>
+                  <Image url="@image/01.png" />
+               </image>
+            </ImageView>
+         </left>
+         <right>
+            <ImageView fx:id="imageViewB" fitHeight="360.0" fitWidth="480.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets right="20.0" />
+               </BorderPane.margin>
+               <image>
+                  <Image url="@image/06.png" />
+               </image>
+            </ImageView>
+         </right>
+         <bottom>
+            <BorderPane prefHeight="184.0" prefWidth="200.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+               <left>
+                  <GridPane fx:id="gridPaneA" prefHeight="184.0" prefWidth="464.0" BorderPane.alignment="TOP_CENTER" >
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <StackPane fx:id="stackPaneA1" prefHeight="92.0" prefWidth="116.0" >
+                           <children>
+                              <ImageView fx:id="imageViewA1" onMouseClicked="#handleImageClickA" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneA2" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="1" >
+                           <children>
+                              <ImageView fx:id="imageViewA2" onMouseClicked="#handleImageClickA" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneA3" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="2">
+                           <children>
+                              <ImageView fx:id="imageViewA3" onMouseClicked="#handleImageClickA" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneA4" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="3">
+                           <children>
+                              <ImageView fx:id="imageViewA4" onMouseClicked="#handleImageClickA" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneA5" prefHeight="92.0" prefWidth="116.0" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewA5" onMouseClicked="#handleImageClickA" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneA6" prefHeight="72.0" prefWidth="305.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewA6" onMouseClicked="#handleImageClickA" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneA7" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewA7" onMouseClicked="#handleImageClickA" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneA8" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewA8" onMouseClicked="#handleImageClickA" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets left="31.0" />
+                     </BorderPane.margin>
+                  </GridPane>
+               </left>
+               <right>
+                  <GridPane fx:id="gridPaneB" prefHeight="184.0" prefWidth="464.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <StackPane fx:id="stackPaneB1" prefHeight="92.0" prefWidth="116.0">
+                           <children>
+                              <ImageView fx:id="imageViewB1" onMouseClicked="#handleImageClickB" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneB2" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewB2" onMouseClicked="#handleImageClickB" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneB3" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="2">
+                           <children>
+                              <ImageView fx:id="imageViewB3" onMouseClicked="#handleImageClickB" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneB4" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="3">
+                           <children>
+                              <ImageView fx:id="imageViewB4" onMouseClicked="#handleImageClickB" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneB5" prefHeight="92.0" prefWidth="116.0" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewB5" onMouseClicked="#handleImageClickB" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneB6" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewB6" onMouseClicked="#handleImageClickB" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneB7" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewB7" onMouseClicked="#handleImageClickB" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneB8" prefHeight="92.0" prefWidth="116.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fx:id="imageViewB8" onMouseClicked="#handleImageClickB" fitHeight="72.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets right="31.0" />
+                     </BorderPane.margin>
+                  </GridPane>
+               </right>
+               <opaqueInsets>
+                  <Insets bottom="10.0" />
+               </opaqueInsets>
+            </BorderPane>
+         </bottom>
+      </BorderPane>
+   </center>
+</BorderPane>
