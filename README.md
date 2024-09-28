@@ -4,10 +4,6 @@
 
 Pixel interpolation is the process of smoothly transitioning the colors of corresponding pixels between two images over a set number of steps, creating a gradual visual transformation from one image to another.
 
-## Source code
-
-The source code is currently under review and will be uploaded at a later time.
-
 ## Screenshots
 
 <img src=docs/image01.png alt="">
