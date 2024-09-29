@@ -4,7 +4,13 @@
 
 Pixel interpolation is the process of smoothly transitioning the colors of corresponding pixels between two images over a set number of steps, creating a gradual visual transformation from one image to another.
 
-## Run the Program
+## Requirements and Setup
+
+The program is built using the JavaFX framework, which requires proper configuration of the JavaFX libraries. The following dependencies are necessary to run the project:
+
+- `javafx-controls`
+
+- `javafx-fxml`
 
 To start the application, run the `PixelInterpolation.java` file located in the `com.example.pixelinterpolation` package.
 
