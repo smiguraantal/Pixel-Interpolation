@@ -82,7 +82,6 @@ public class ImageInterpolator {
         timer.start();
     }
 
-    // Interpoláció leállítása
     public void stopInterpolation() {
         isStopped = true;
         if (timer != null) {

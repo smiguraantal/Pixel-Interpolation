@@ -8,9 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -19,14 +24,39 @@ import java.util.Objects;
 public class Controller implements InterpolationCallback {
 
     @FXML
+    public FlowPane flowPaneCenter;
+
+    @FXML
+    public RadioButton radioButtonStandard;
+    @FXML
+    public RadioButton radioButtonProgressive;
+
+    @FXML
+    public Label labelSteps;
+    @FXML
+    public Label labelDelay;
+
+    @FXML
     public TextField textFieldSteps;
     @FXML
     public TextField textFieldDelay;
 
     @FXML
+    public Label labelBand;
+    @FXML
+    public Label labelDirection;
+
+    @FXML
+    public ComboBox<Integer> comboBoxBand;
+    @FXML
+    public ComboBox<String> comboBoxDirection;
+
+    @FXML
     public Button buttonStart;
     @FXML
-    public Button buttonStop;
+    public Button buttonPause;
+    @FXML
+    public Button buttonReset;
 
     @FXML
     private GridPane gridPaneA;
@@ -149,19 +179,20 @@ public class Controller implements InterpolationCallback {
         selectStackPane(selectedStackPaneB, true);
         selectedImageB = image2;
 
+        ToggleGroup group = new ToggleGroup();
+        radioButtonStandard.setToggleGroup(group);
+        radioButtonProgressive.setToggleGroup(group);
+        radioButtonStandard.setSelected(true);
+
         TextFieldFormatter.setupTextFieldFormatter(textFieldSteps, STEPS_MIN_VALUE, STEPS_MAX_VALUE);
         TextFieldFormatter.setupTextFieldFormatter(textFieldDelay, DELAY_MIN_VALUE, DELAY_MAX_VALUE);
 
         textFieldSteps.setText(String.valueOf(STEPS_INITIAL_VALUE));
         textFieldDelay.setText(String.valueOf(DELAY_INITIAL_VALUE));
 
-        buttonStop.setDisable(true);
+        buttonPause.setDisable(true);
+        buttonReset.setDisable(true);
         Platform.runLater(() -> buttonStart.requestFocus());
-    }
-
-    @FXML
-    public void handleStopButton() {
-        interpolator.stopInterpolation();
     }
 
     @FXML
@@ -294,8 +325,11 @@ public class Controller implements InterpolationCallback {
     public void onInterpolationStarted() {
         textFieldSteps.setDisable(true);
         textFieldDelay.setDisable(true);
+
         buttonStart.setDisable(true);
-        buttonStop.setDisable(false);
+        buttonPause.setDisable(false);
+        buttonReset.setDisable(false);
+
         setMiniaturesEnabled(false);
     }
 
@@ -303,10 +337,14 @@ public class Controller implements InterpolationCallback {
     public void onInterpolationFinished() {
         textFieldSteps.setDisable(false);
         textFieldDelay.setDisable(false);
+
         buttonStart.setDisable(false);
-        buttonStop.setDisable(true);
-        setMiniaturesEnabled(true);
+        buttonPause.setDisable(true);
+        buttonReset.setDisable(true);
         buttonStart.requestFocus();
+
+        setMiniaturesEnabled(true);
+
         swapSelection();
     }
 
@@ -314,9 +352,31 @@ public class Controller implements InterpolationCallback {
     public void onInterpolationStopped() {
         textFieldSteps.setDisable(false);
         textFieldDelay.setDisable(false);
+
         buttonStart.setDisable(false);
-        buttonStop.setDisable(true);
-        setMiniaturesEnabled(true);
+        buttonPause.setDisable(true);
+        buttonReset.setDisable(true);
         buttonStart.requestFocus();
+
+        setMiniaturesEnabled(true);
+    }
+
+    @FXML
+    public void handleRadioButtonStandardAction(ActionEvent actionEvent) {
+        System.out.println("Standard");
+    }
+
+    @FXML
+    public void handleRadioButtonProgressiveAction(ActionEvent actionEvent) {
+        System.out.println("Progressive");
+    }
+
+    @FXML
+    public void onResetButtonClick(ActionEvent actionEvent) {
+        interpolator.stopInterpolation();
+    }
+
+    @FXML
+    public void onPauseButtonClick(ActionEvent actionEvent) {
     }
 }
