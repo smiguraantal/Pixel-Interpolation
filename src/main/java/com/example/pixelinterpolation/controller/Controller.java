@@ -131,6 +131,18 @@ public class Controller implements InterpolationCallback {
     private static final int DELAY_MAX_VALUE = 1000;
     private static final int DELAY_INITIAL_VALUE = 0;
 
+    private static final int BAND_100 = 100;
+    private static final int BAND_200 = 200;
+    private static final int BAND_400 = 400;
+    private static final int BAND_INITIAL_VALUE = BAND_200;
+
+    private static final String DIRECTION_LEFT_TO_RIGHT = "Left to Right";
+    private static final String DIRECTION_RIGHT_TO_LEFT = "Right to Left";
+    private static final String DIRECTION_TOP_TO_BOTTOM = "Top to Bottom";
+    private static final String DIRECTION_BOTTOM_TO_TOP = "Bottom to Top";
+
+    private static final String DIRECTION_INITIAL_VALUE = DIRECTION_LEFT_TO_RIGHT;
+
     private static final String SELECTED_STYLE = "-fx-border-color: lightgreen; -fx-border-width: 5px;";
     private static final String DEFAULT_STYLE = "";
 
@@ -189,6 +201,19 @@ public class Controller implements InterpolationCallback {
 
         textFieldSteps.setText(String.valueOf(STEPS_INITIAL_VALUE));
         textFieldDelay.setText(String.valueOf(DELAY_INITIAL_VALUE));
+
+        comboBoxBand.getItems().addAll(
+                BAND_100,
+                BAND_200,
+                BAND_400);
+        comboBoxBand.setValue(BAND_INITIAL_VALUE);
+
+        comboBoxDirection.getItems().addAll(
+                DIRECTION_LEFT_TO_RIGHT,
+                DIRECTION_RIGHT_TO_LEFT,
+                DIRECTION_TOP_TO_BOTTOM,
+                DIRECTION_BOTTOM_TO_TOP);
+        comboBoxDirection.setValue(DIRECTION_INITIAL_VALUE);
 
         buttonPause.setDisable(true);
         buttonReset.setDisable(true);
@@ -323,8 +348,14 @@ public class Controller implements InterpolationCallback {
 
     @Override
     public void onInterpolationStarted() {
+        radioButtonStandard.setDisable(true);
+        radioButtonProgressive.setDisable(true);
+
         textFieldSteps.setDisable(true);
         textFieldDelay.setDisable(true);
+
+        comboBoxBand.setDisable(true);
+        comboBoxDirection.setDisable(true);
 
         buttonStart.setDisable(true);
         buttonPause.setDisable(false);
@@ -335,8 +366,14 @@ public class Controller implements InterpolationCallback {
 
     @Override
     public void onInterpolationFinished() {
+        radioButtonStandard.setDisable(false);
+        radioButtonProgressive.setDisable(false);
+
         textFieldSteps.setDisable(false);
         textFieldDelay.setDisable(false);
+
+        comboBoxBand.setDisable(false);
+        comboBoxDirection.setDisable(false);
 
         buttonStart.setDisable(false);
         buttonPause.setDisable(true);
@@ -350,8 +387,14 @@ public class Controller implements InterpolationCallback {
 
     @Override
     public void onInterpolationStopped() {
+        radioButtonStandard.setDisable(false);
+        radioButtonProgressive.setDisable(false);
+
         textFieldSteps.setDisable(false);
         textFieldDelay.setDisable(false);
+
+        comboBoxBand.setDisable(false);
+        comboBoxDirection.setDisable(false);
 
         buttonStart.setDisable(false);
         buttonPause.setDisable(true);
@@ -363,12 +406,15 @@ public class Controller implements InterpolationCallback {
 
     @FXML
     public void handleRadioButtonStandardAction(ActionEvent actionEvent) {
-        System.out.println("Standard");
+        flowPaneCenter.getChildren().clear();
+        flowPaneCenter.getChildren().addAll(labelSteps, textFieldSteps, labelDelay, textFieldDelay);
     }
 
     @FXML
     public void handleRadioButtonProgressiveAction(ActionEvent actionEvent) {
-        System.out.println("Progressive");
+        flowPaneCenter.getChildren().clear();
+        flowPaneCenter.getChildren().addAll(labelBand, comboBoxBand, labelDirection, comboBoxDirection);
+
     }
 
     @FXML
