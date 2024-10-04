@@ -1,7 +1,7 @@
 package com.example.pixelinterpolation.controller;
 
 import com.example.pixelinterpolation.formatter.TextFieldFormatter;
-import com.example.pixelinterpolation.interpolator.ImageInterpolator;
+import com.example.pixelinterpolation.interpolator.StandardInterpolator;
 import com.example.pixelinterpolation.interpolator.InterpolationCallback;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ import javafx.scene.layout.StackPane;
 
 import java.util.Objects;
 
-public class Controller implements InterpolationCallback {
+public class InterpolationController implements InterpolationCallback {
 
     @FXML
     public FlowPane flowPaneCenter;
@@ -106,7 +106,7 @@ public class Controller implements InterpolationCallback {
     @FXML
     private ImageView imageViewB8;
 
-    private ImageInterpolator interpolator;
+    private StandardInterpolator interpolator;
 
     private Image image1;
     private Image image2;
@@ -180,7 +180,7 @@ public class Controller implements InterpolationCallback {
         imageViewB7.setImage(image7);
         imageViewB8.setImage(image8);
 
-        interpolator = new ImageInterpolator(imageViewA, imageViewB, image1, image2);
+        interpolator = new StandardInterpolator(imageViewA, imageViewB, image1, image2);
         interpolator.setCallback(this);
 
         selectedStackPaneA = stackPaneA1;

@@ -8,32 +8,13 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-public class ImageInterpolator {
-
-    private InterpolationCallback callback;
-
-    private ImageView imageViewA;
-    private ImageView imageViewB;
-
-    private Image image1;
-    private Image image2;
-
-    private int width;
-    private int height;
+public class StandardInterpolator extends AbstractInterpolator {
 
     private int steps = 100;
     private int delay = 0;
 
-    private AnimationTimer timer;
-    private boolean isStopped = false;
-
-    public ImageInterpolator(ImageView imageViewA, ImageView imageViewB, Image image1, Image image2) {
-        this.imageViewA = imageViewA;
-        this.imageViewB = imageViewB;
-        this.image1 = image1;
-        this.image2 = image2;
-        this.width = (int) image1.getWidth();
-        this.height = (int) image1.getHeight();
+    public StandardInterpolator(ImageView imageViewA, ImageView imageViewB, Image image1, Image image2) {
+        super(imageViewA, imageViewB, image1, image2);
     }
 
     public void startInterpolation(Runnable onComplete) {
@@ -46,7 +27,7 @@ public class ImageInterpolator {
 
         callback.onInterpolationStarted();
 
-        timer = new AnimationTimer() {
+        animationTimer = new AnimationTimer() {
             private int step = 0;
             private long lastUpdate = 0;
 
@@ -79,16 +60,7 @@ public class ImageInterpolator {
         };
 
         isStopped = false;
-        timer.start();
-    }
-
-    public void stopInterpolation() {
-        isStopped = true;
-        if (timer != null) {
-            timer.stop();
-        }
-        updateImages(image1, image2);
-        callback.onInterpolationStopped();
+        animationTimer.start();
     }
 
     private void interpolate(PixelReader reader1, PixelReader reader2, PixelWriter writer1, PixelWriter writer2, int step) {
@@ -109,27 +81,6 @@ public class ImageInterpolator {
                 writer2.setColor(x, y, Color.color(red2, green2, blue2));
             }
         }
-    }
-
-    public void setCallback(InterpolationCallback callback) {
-        this.callback = callback;
-    }
-
-    public void updateImages(Image newImageA, Image newImageB) {
-        this.image1 = newImageA;
-        this.image2 = newImageB;
-
-        imageViewA.setImage(image1);
-        imageViewB.setImage(image2);
-    }
-
-    public void swapImages() {
-        Image temp = image1;
-        image1 = image2;
-        image2 = temp;
-
-        imageViewA.setImage(image1);
-        imageViewB.setImage(image2);
     }
 
     private double interpolate(double value1, double value2, int step) {
