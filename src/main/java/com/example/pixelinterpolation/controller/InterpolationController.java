@@ -3,6 +3,7 @@ package com.example.pixelinterpolation.controller;
 import com.example.pixelinterpolation.formatter.TextFieldFormatter;
 import com.example.pixelinterpolation.interpolator.StandardInterpolator;
 import com.example.pixelinterpolation.interpolator.InterpolationCallback;
+import com.example.pixelinterpolation.interpolator.strategy.ProgressiveInterpolationStrategy;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -107,6 +108,7 @@ public class InterpolationController implements InterpolationCallback {
     private ImageView imageViewB8;
 
     private StandardInterpolator interpolator;
+//    private ProgressiveInterpolationStrategy progressiveInterpolator;
 
     private Image image1;
     private Image image2;
