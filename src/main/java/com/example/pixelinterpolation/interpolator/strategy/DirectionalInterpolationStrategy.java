@@ -4,10 +4,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-public abstract class ProgressiveInterpolationStrategy {
+public abstract class DirectionalInterpolationStrategy {
 
     protected int width;
     protected int height;
+
+    protected static final int COLOR_INTERPOLATION_STEPS = 100;
 
     public abstract WritableImage interpolate(Image image1, Image image2, int step, int bandWidth);
 

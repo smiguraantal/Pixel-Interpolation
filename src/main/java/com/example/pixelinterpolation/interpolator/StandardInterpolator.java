@@ -8,7 +8,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-public class StandardInterpolator extends AbstractInterpolator {
+public class StandardInterpolator extends AbstractInterpolator implements Interpolator {
 
     private int steps = 100;
     private int delay = 0;
@@ -40,6 +40,10 @@ public class StandardInterpolator extends AbstractInterpolator {
                     return;
                 }
 
+                if (isPaused) {
+                    return;
+                }
+
                 if (now - lastUpdate >= delay * 1_000_000) {
                     if (step >= steps) {
                         stop();
@@ -60,6 +64,7 @@ public class StandardInterpolator extends AbstractInterpolator {
         };
 
         isStopped = false;
+        isPaused = false;
         animationTimer.start();
     }
 

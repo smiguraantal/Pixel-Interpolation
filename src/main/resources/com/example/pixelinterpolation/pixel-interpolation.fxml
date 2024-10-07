@@ -15,40 +15,40 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pixelinterpolation.controller.InterpolationController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1020.0" style="-fx-background-color: beige;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pixelinterpolation.controller.InterpolationController">
    <bottom>
-      <BorderPane prefHeight="52.0" style="-fx-background-color: lightgreen;">
+      <BorderPane prefHeight="52.0" style="-fx-background-color: tan;">
          <left>
             <FlowPane alignment="CENTER_LEFT" hgap="10.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                <children>
                   <Label text="Interpolation Type:" />
-                  <RadioButton fx:id="radioButtonStandard" onAction="#handleRadioButtonStandardAction" mnemonicParsing="false" text="Standard" />
-                  <RadioButton fx:id="radioButtonProgressive" onAction="#handleRadioButtonProgressiveAction" mnemonicParsing="false" text="Progressive" />
+                  <RadioButton fx:id="radioButtonStandard" mnemonicParsing="false" onAction="#handleRadioButtonStandardAction" text="Standard" />
+                  <RadioButton fx:id="radioButtonDirectional" mnemonicParsing="false" onAction="#handleRadioButtonDirectionalAction" text="Directional" />
                </children>
                <padding>
-                  <Insets left="10.0" />
+                  <Insets left="20.0" />
                </padding>
             </FlowPane>
          </left>
          <right>
             <FlowPane alignment="CENTER_RIGHT" hgap="10.0" prefWidth="260.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="buttonStart" onAction="#onStartButtonClick" mnemonicParsing="false" prefWidth="70.0" text="Start" />
-                  <Button fx:id="buttonPause" onAction="#onPauseButtonClick" mnemonicParsing="false" prefWidth="70.0" text="Pause" />
-                  <Button fx:id="buttonReset" onAction="#onResetButtonClick" mnemonicParsing="false" prefWidth="70.0" text="Reset" />
+                  <Button fx:id="buttonStart" mnemonicParsing="false" onAction="#onStartButtonClick" prefWidth="70.0" text="Start" />
+                  <Button fx:id="buttonPause" mnemonicParsing="false" onAction="#onPauseButtonClick" prefWidth="70.0" text="Pause" />
+                  <Button fx:id="buttonReset" mnemonicParsing="false" onAction="#onResetButtonClick" prefWidth="70.0" text="Reset" />
                </children>
                <padding>
-                  <Insets right="10.0" />
+                  <Insets right="20.0" />
                </padding>
             </FlowPane>
          </right>
          <center>
             <FlowPane fx:id="flowPaneCenter" alignment="CENTER" hgap="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="labelSteps" text="Steps [1-1000]" />
-                  <TextField fx:id="textFieldSteps" prefWidth="40" />
+                  <Label fx:id="labelSteps" text="Number of Steps [1-1000]" />
+                  <TextField fx:id="textFieldSteps" prefWidth="50.0" />
                   <Label fx:id="labelDelay" text="Delay (ms) [0-1000]" />
-                  <TextField fx:id="textFieldDelay" prefWidth="40" />
+                  <TextField fx:id="textFieldDelay" prefWidth="50.0" />
                </children>
                <padding>
                   <Insets left="10.0" right="10.0" />
@@ -146,7 +146,7 @@
                         </StackPane>
                      </children>
                      <BorderPane.margin>
-                        <Insets left="31.0" />
+                        <Insets left="30.0" />
                      </BorderPane.margin>
                   </GridPane>
                </left>
@@ -213,7 +213,7 @@
                         </StackPane>
                      </children>
                      <BorderPane.margin>
-                        <Insets right="31.0" />
+                        <Insets right="30.0" />
                      </BorderPane.margin>
                   </GridPane>
                </right>

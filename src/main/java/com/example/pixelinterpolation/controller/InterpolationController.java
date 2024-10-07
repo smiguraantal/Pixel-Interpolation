@@ -1,9 +1,15 @@
 package com.example.pixelinterpolation.controller;
 
 import com.example.pixelinterpolation.formatter.TextFieldFormatter;
-import com.example.pixelinterpolation.interpolator.StandardInterpolator;
+import com.example.pixelinterpolation.interpolator.AbstractInterpolator;
+import com.example.pixelinterpolation.interpolator.DirectionalInterpolator;
 import com.example.pixelinterpolation.interpolator.InterpolationCallback;
-import com.example.pixelinterpolation.interpolator.strategy.ProgressiveInterpolationStrategy;
+import com.example.pixelinterpolation.interpolator.StandardInterpolator;
+import com.example.pixelinterpolation.interpolator.strategy.BottomToTopInterpolationStrategy;
+import com.example.pixelinterpolation.interpolator.strategy.DirectionalInterpolationStrategy;
+import com.example.pixelinterpolation.interpolator.strategy.LeftToRightInterpolationStrategy;
+import com.example.pixelinterpolation.interpolator.strategy.RightToLeftInterpolationStrategy;
+import com.example.pixelinterpolation.interpolator.strategy.TopToBottomInterpolationStrategy;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +36,7 @@ public class InterpolationController implements InterpolationCallback {
     @FXML
     public RadioButton radioButtonStandard;
     @FXML
-    public RadioButton radioButtonProgressive;
+    public RadioButton radioButtonDirectional;
 
     @FXML
     public Label labelSteps;
@@ -107,17 +113,17 @@ public class InterpolationController implements InterpolationCallback {
     @FXML
     private ImageView imageViewB8;
 
-    private StandardInterpolator interpolator;
-//    private ProgressiveInterpolationStrategy progressiveInterpolator;
+    private AbstractInterpolator interpolator;
+    private StandardInterpolator standardInterpolator;
+    private DirectionalInterpolator directionalInterpolator;
+
+    private DirectionalInterpolationStrategy leftToRightInterpolationStrategy;
+    private DirectionalInterpolationStrategy rightToLeftInterpolationStrategy;
+    private DirectionalInterpolationStrategy topToBottomInterpolationStrategy;
+    private DirectionalInterpolationStrategy bottomToTopInterpolationStrategy;
 
     private Image image1;
     private Image image2;
-    private Image image3;
-    private Image image4;
-    private Image image5;
-    private Image image6;
-    private Image image7;
-    private Image image8;
 
     private Image selectedImageA;
     private Image selectedImageB;
@@ -145,7 +151,7 @@ public class InterpolationController implements InterpolationCallback {
 
     private static final String DIRECTION_INITIAL_VALUE = DIRECTION_LEFT_TO_RIGHT;
 
-    private static final String SELECTED_STYLE = "-fx-border-color: lightgreen; -fx-border-width: 5px;";
+    private static final String SELECTED_STYLE = "-fx-border-color: tan; -fx-border-width: 5px;";
     private static final String DEFAULT_STYLE = "";
 
     private static final String IMAGE_PATH = "/com/example/pixelinterpolation/image/";
@@ -154,12 +160,13 @@ public class InterpolationController implements InterpolationCallback {
     public void initialize() {
         image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "01.png")));
         image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "02.png")));
-        image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "14.png")));
-        image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "13.png")));
-        image5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "11.png")));
-        image6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "07.png")));
-        image7 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "06.png")));
-        image8 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "08.png")));
+
+        Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "14.png")));
+        Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "13.png")));
+        Image image5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "11.png")));
+        Image image6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "07.png")));
+        Image image7 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "06.png")));
+        Image image8 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_PATH + "08.png")));
 
         imageViewA.setImage(image1);
         imageViewB.setImage(image2);
@@ -182,7 +189,15 @@ public class InterpolationController implements InterpolationCallback {
         imageViewB7.setImage(image7);
         imageViewB8.setImage(image8);
 
-        interpolator = new StandardInterpolator(imageViewA, imageViewB, image1, image2);
+        leftToRightInterpolationStrategy = new LeftToRightInterpolationStrategy();
+        rightToLeftInterpolationStrategy = new RightToLeftInterpolationStrategy();
+        topToBottomInterpolationStrategy = new TopToBottomInterpolationStrategy();
+        bottomToTopInterpolationStrategy = new BottomToTopInterpolationStrategy();
+
+        standardInterpolator = new StandardInterpolator(imageViewA, imageViewB, image1, image2);
+        directionalInterpolator = new DirectionalInterpolator(imageViewA, imageViewB, image1, image2, leftToRightInterpolationStrategy);
+
+        interpolator = standardInterpolator;
         interpolator.setCallback(this);
 
         selectedStackPaneA = stackPaneA1;
@@ -195,7 +210,7 @@ public class InterpolationController implements InterpolationCallback {
 
         ToggleGroup group = new ToggleGroup();
         radioButtonStandard.setToggleGroup(group);
-        radioButtonProgressive.setToggleGroup(group);
+        radioButtonDirectional.setToggleGroup(group);
         radioButtonStandard.setSelected(true);
 
         TextFieldFormatter.setupTextFieldFormatter(textFieldSteps, STEPS_MIN_VALUE, STEPS_MAX_VALUE);
@@ -222,23 +237,112 @@ public class InterpolationController implements InterpolationCallback {
         Platform.runLater(() -> buttonStart.requestFocus());
     }
 
+    @Override
+    public void onInterpolationStarted() {
+        radioButtonStandard.setDisable(true);
+        radioButtonDirectional.setDisable(true);
+
+        textFieldSteps.setDisable(true);
+        textFieldDelay.setDisable(true);
+
+        comboBoxBand.setDisable(true);
+        comboBoxDirection.setDisable(true);
+
+        buttonStart.setDisable(true);
+        buttonPause.setDisable(false);
+        buttonReset.setDisable(false);
+
+        setMiniaturesEnabled(false);
+    }
+
+    @Override
+    public void onInterpolationFinished() {
+        radioButtonStandard.setDisable(false);
+        radioButtonDirectional.setDisable(false);
+
+        textFieldSteps.setDisable(false);
+        textFieldDelay.setDisable(false);
+
+        comboBoxBand.setDisable(false);
+        comboBoxDirection.setDisable(false);
+
+        buttonStart.setDisable(false);
+        buttonPause.setDisable(true);
+        buttonReset.setDisable(true);
+        buttonStart.requestFocus();
+
+        setMiniaturesEnabled(true);
+
+        swapSelection();
+    }
+
+    @Override
+    public void onInterpolationStopped() {
+        radioButtonStandard.setDisable(false);
+        radioButtonDirectional.setDisable(false);
+
+        textFieldSteps.setDisable(false);
+        textFieldDelay.setDisable(false);
+
+        comboBoxBand.setDisable(false);
+        comboBoxDirection.setDisable(false);
+
+        buttonPause.setText("Pause");
+
+        buttonStart.setDisable(false);
+        buttonPause.setDisable(true);
+        buttonReset.setDisable(true);
+        buttonStart.requestFocus();
+
+        setMiniaturesEnabled(true);
+    }
+
     @FXML
     protected void onStartButtonClick(ActionEvent event) {
+        if (interpolator instanceof StandardInterpolator) {
+            configureStandardInterpolation();
+        } else {
+            configureDirectionalInterpolation();
+        }
+
         interpolator.updateImages(selectedImageA, selectedImageB);
-
-        if (textFieldSteps.getText().isEmpty()) {
-            textFieldSteps.setText(String.valueOf(STEPS_INITIAL_VALUE));
-        }
-        if (textFieldDelay.getText().isEmpty()) {
-            textFieldDelay.setText(String.valueOf(DELAY_INITIAL_VALUE));
-        }
-
-        interpolator.setSteps(textFieldSteps.getText().isEmpty() ? STEPS_INITIAL_VALUE : Integer.parseInt(textFieldSteps.getText()));
-        interpolator.setDelay(textFieldDelay.getText().isEmpty() ? DELAY_INITIAL_VALUE : Integer.parseInt(textFieldDelay.getText()));
 
         interpolator.startInterpolation(() -> {
             interpolator.swapImages();
         });
+    }
+
+    @FXML
+    public void onPauseButtonClick(ActionEvent actionEvent) {
+        if (!interpolator.isPaused()) {
+            interpolator.pauseInterpolation();
+            buttonPause.setText("Resume");
+        } else {
+            interpolator.resumeInterpolation();
+            buttonPause.setText("Pause");
+        }
+    }
+
+    @FXML
+    public void onResetButtonClick(ActionEvent actionEvent) {
+        interpolator.stopInterpolation();
+    }
+
+    @FXML
+    public void handleRadioButtonStandardAction(ActionEvent actionEvent) {
+        flowPaneCenter.getChildren().clear();
+        flowPaneCenter.getChildren().addAll(labelSteps, textFieldSteps, labelDelay, textFieldDelay);
+
+        interpolator = standardInterpolator;
+    }
+
+    @FXML
+    public void handleRadioButtonDirectionalAction(ActionEvent actionEvent) {
+        flowPaneCenter.getChildren().clear();
+        flowPaneCenter.getChildren().addAll(labelBand, comboBoxBand, labelDirection, comboBoxDirection);
+
+        interpolator = directionalInterpolator;
+        interpolator.setCallback(this);
     }
 
     @FXML
@@ -287,6 +391,39 @@ public class InterpolationController implements InterpolationCallback {
 
         selectedImageB = clickedImageView.getImage();
         imageViewB.setImage(selectedImageB);
+    }
+
+    private void configureStandardInterpolation() {
+        if (textFieldSteps.getText().isEmpty()) {
+            textFieldSteps.setText(String.valueOf(STEPS_INITIAL_VALUE));
+        }
+        if (textFieldDelay.getText().isEmpty()) {
+            textFieldDelay.setText(String.valueOf(DELAY_INITIAL_VALUE));
+        }
+
+        ((StandardInterpolator) interpolator).setSteps(textFieldSteps.getText().isEmpty() ? STEPS_INITIAL_VALUE : Integer.parseInt(textFieldSteps.getText()));
+        ((StandardInterpolator) interpolator).setDelay(textFieldDelay.getText().isEmpty() ? DELAY_INITIAL_VALUE : Integer.parseInt(textFieldDelay.getText()));
+    }
+
+    private void configureDirectionalInterpolation() {
+        switch (comboBoxDirection.getValue()) {
+            case DIRECTION_LEFT_TO_RIGHT:
+                interpolator = new DirectionalInterpolator(imageViewA, imageViewB, image1, image2, leftToRightInterpolationStrategy);
+                break;
+            case DIRECTION_RIGHT_TO_LEFT:
+                interpolator = new DirectionalInterpolator(imageViewA, imageViewB, image1, image2, rightToLeftInterpolationStrategy);
+                break;
+            case DIRECTION_TOP_TO_BOTTOM:
+                interpolator = new DirectionalInterpolator(imageViewA, imageViewB, image1, image2, topToBottomInterpolationStrategy);
+                break;
+            case DIRECTION_BOTTOM_TO_TOP:
+                interpolator = new DirectionalInterpolator(imageViewA, imageViewB, image1, image2, bottomToTopInterpolationStrategy);
+                break;
+        }
+
+        ((DirectionalInterpolator) interpolator).setBandWidth(comboBoxBand.getValue());
+
+        interpolator.setCallback(this);
     }
 
     private void setMiniaturesEnabled(boolean enabled) {
@@ -346,85 +483,5 @@ public class InterpolationController implements InterpolationCallback {
 
     private void selectStackPane(StackPane stackPane, boolean selected) {
         stackPane.setStyle(selected ? SELECTED_STYLE : DEFAULT_STYLE);
-    }
-
-    @Override
-    public void onInterpolationStarted() {
-        radioButtonStandard.setDisable(true);
-        radioButtonProgressive.setDisable(true);
-
-        textFieldSteps.setDisable(true);
-        textFieldDelay.setDisable(true);
-
-        comboBoxBand.setDisable(true);
-        comboBoxDirection.setDisable(true);
-
-        buttonStart.setDisable(true);
-        buttonPause.setDisable(false);
-        buttonReset.setDisable(false);
-
-        setMiniaturesEnabled(false);
-    }
-
-    @Override
-    public void onInterpolationFinished() {
-        radioButtonStandard.setDisable(false);
-        radioButtonProgressive.setDisable(false);
-
-        textFieldSteps.setDisable(false);
-        textFieldDelay.setDisable(false);
-
-        comboBoxBand.setDisable(false);
-        comboBoxDirection.setDisable(false);
-
-        buttonStart.setDisable(false);
-        buttonPause.setDisable(true);
-        buttonReset.setDisable(true);
-        buttonStart.requestFocus();
-
-        setMiniaturesEnabled(true);
-
-        swapSelection();
-    }
-
-    @Override
-    public void onInterpolationStopped() {
-        radioButtonStandard.setDisable(false);
-        radioButtonProgressive.setDisable(false);
-
-        textFieldSteps.setDisable(false);
-        textFieldDelay.setDisable(false);
-
-        comboBoxBand.setDisable(false);
-        comboBoxDirection.setDisable(false);
-
-        buttonStart.setDisable(false);
-        buttonPause.setDisable(true);
-        buttonReset.setDisable(true);
-        buttonStart.requestFocus();
-
-        setMiniaturesEnabled(true);
-    }
-
-    @FXML
-    public void handleRadioButtonStandardAction(ActionEvent actionEvent) {
-        flowPaneCenter.getChildren().clear();
-        flowPaneCenter.getChildren().addAll(labelSteps, textFieldSteps, labelDelay, textFieldDelay);
-    }
-
-    @FXML
-    public void handleRadioButtonProgressiveAction(ActionEvent actionEvent) {
-        flowPaneCenter.getChildren().clear();
-        flowPaneCenter.getChildren().addAll(labelBand, comboBoxBand, labelDirection, comboBoxDirection);
-
-    }
-
-    @FXML
-    public void onResetButtonClick(ActionEvent actionEvent) {
-        interpolator.stopInterpolation();
-    }
-
-    @FXML
-    public void onPauseButtonClick(ActionEvent actionEvent) {
     }
 }
