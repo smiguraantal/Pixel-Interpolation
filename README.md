@@ -87,3 +87,14 @@ This reset function allows them to interrupt the process and restart the interpo
 | ![Kép B0](docs/savedImageB0.png)  | ![Kép B25](docs/savedImageB25.png) | ![Kép B50](docs/savedImageB50.png) | ![Kép B75](docs/savedImageB75.png) | ![Kép B100](docs/savedImageB100.png) |
 | ![Kép C0](docs/savedImageC0.png)  | ![Kép C25](docs/savedImageC25.png) | ![Kép C50](docs/savedImageC50.png) | ![Kép C75](docs/savedImageC75.png) | ![Kép C100](docs/savedImageC100.png) |
 | ![Kép D0](docs/savedImageD0.png)  | ![Kép D25](docs/savedImageD25.png) | ![Kép D50](docs/savedImageD50.png) | ![Kép D75](docs/savedImageD75.png) | ![Kép D100](docs/savedImageD100.png) |
+
+<br>
+<img src=docs/image02.png alt="">
+<br>
+
+
+| ![Kép E0](docs/savedImageE0.png) | ![Kép E145](docs/savedImageE145.png) | ![Kép E290](docs/savedImageE290.png) | ![Kép E435](docs/savedImageE435.png) | ![Kép E580](docs/savedImageE580.png) |
+|----------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
+| ![Kép F0](docs/savedImageF0.png) | ![Kép F145](docs/savedImageF145.png) | ![Kép F290](docs/savedImageF290.png) | ![Kép F435](docs/savedImageF435.png) | ![Kép F580](docs/savedImageF580.png) |
+| ![Kép G0](docs/savedImageG0.png) | ![Kép G115](docs/savedImageG115.png) | ![Kép G230](docs/savedImageG230.png) | ![Kép G345](docs/savedImageG345.png) | ![Kép G460](docs/savedImageG460.png) |
+| ![Kép H0](docs/savedImageH0.png) | ![Kép H115](docs/savedImageH115.png) | ![Kép H230](docs/savedImageH230.png) | ![Kép H345](docs/savedImageH345.png) | ![Kép H460](docs/savedImageH460.png) |
