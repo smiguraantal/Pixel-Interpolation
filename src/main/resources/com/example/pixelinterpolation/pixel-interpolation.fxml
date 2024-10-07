@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1020.0" style="-fx-background-color: beige;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pixelinterpolation.controller.InterpolationController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="1020.0" style="-fx-background-color: beige;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pixelinterpolation.controller.InterpolationController">
    <bottom>
-      <BorderPane prefHeight="52.0" style="-fx-background-color: tan;">
+      <BorderPane prefHeight="50.0" style="-fx-background-color: tan;">
          <left>
             <FlowPane alignment="CENTER_LEFT" hgap="10.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                <children>
