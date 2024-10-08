@@ -36,7 +36,7 @@ __Updating the Image:__ After the program calculates the new RGB values, it upda
 
 __Final Image Display:__ At the end of the interpolation, the pixel colors reach those of the second image, allowing the user to see a smooth and gradual transformation from the first image to the second.
 
-## Standard Inetrpolation
+## Standard Interpolation
 
 Standard interpolation provides a complete transformation between the two images, where all pixels change simultaneously.
 
